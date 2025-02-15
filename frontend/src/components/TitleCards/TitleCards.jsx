@@ -12,7 +12,7 @@ const TitleCards = ({ title = "Popular", category }) => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/movies/${encodeURIComponent(category || "now_playing")}`)
+    fetch(`https://netflix-s87l.onrender.com/movies/${encodeURIComponent(category || "now_playing")}`)
       .then(response => response.json())
       .then(response => setApiData(response.Search || []))
       .catch(err => console.error(err));

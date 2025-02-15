@@ -10,6 +10,10 @@ const API_KEY = process.env.OMDB_API_KEY; // Use a key from OMDB or another sour
 
 app.use(cors());
 
+
+app.get('/',(req, res)=>{
+    res.send('Hello');
+  })
 // Fetch movies by category (default: popular)
 app.get('/movies/:category', async (req, res) => {
     const category = req.params.category || 'popular';

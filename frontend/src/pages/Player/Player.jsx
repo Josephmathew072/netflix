@@ -14,7 +14,7 @@ const Player = () => {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:5000/movies/${id}/videos`)
+    fetch(`https://netflix-s87l.onrender.com/movies/${id}/videos`)
       .then(response => response.json())
       .then(response => setApiData(response))
       .catch(err => console.error(err));
