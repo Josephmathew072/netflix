@@ -16,16 +16,17 @@ const Player = () => {
   useEffect(() => {
     fetch(`https://netflix-s87l.onrender.com/movies/${id}/videos`)
       .then(response => response.json())
-      .then(response => setApiData(response))
+      .then(data =>{ console.log(data); setApiData(data.results[0])})
       .catch(err => console.error(err));
   }, [id]);
+  const publishedDate = apiData.published_at ? apiData.published_at.slice(0, 10) : "N/A";
 
   return (
     <div className='player'>
-      <img src={back_arrow} alt="" onClick={() => navigate(-1)} />
+      <img src={back_arrow} alt="" onClick={() => { navigate(-1); }} />
       <iframe width='90%' height='90%' src={`https://www.youtube.com/embed/${apiData.key}`} title='trailer' frameBorder='0' allowFullScreen></iframe>
       <div className="player_info">
-        <p>{apiData.premiered?.slice(0, 10)}</p>
+        <p>{publishedDate}</p>
         <p>{apiData.name}</p>
         <p>{apiData.type}</p>
       </div>
