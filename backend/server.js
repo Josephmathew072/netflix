@@ -6,7 +6,8 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const API_KEY = process.env.OMDB_API_KEY; // Use a key from OMDB or another source
+// const API_KEY = process.env.OMDB_API_KEY; // Use a key from OMDB or another source
+const TMDB_API_KEY = process.env.TMDB_API_KEY;
 
 app.use(cors());
 
