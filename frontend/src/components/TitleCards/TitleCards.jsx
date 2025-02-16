@@ -1,6 +1,7 @@
 import './TitleCards.css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const TitleCards = ({ title = "Popular", category }) => {
   const [apiData, setApiData] = useState([]);
@@ -10,15 +11,41 @@ const TitleCards = ({ title = "Popular", category }) => {
     cardsRef.current.scrollLeft += event.deltaY;
   };
 
-  useEffect(() => {
-    fetch(`https://netflix-s87l.onrender.com/movies/${encodeURIComponent(category || "now_playing")}`)
-    .then(response => response.json())
-    .then(data => {
-      setApiData(data.results);
-    })
-      .catch(err => console.error(err));
+  // useEffect(() => {
+  //   fetch(`https://netflix-s87l.onrender.com/movies/${encodeURIComponent(category || "now_playing")}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     setApiData(data.results);
+  //   })
+  //     .catch(err => console.error(err));
 
-    cardsRef.current.addEventListener('wheel', handleWheel);
+  //   cardsRef.current.addEventListener('wheel', handleWheel);
+  // }, [category]);
+
+
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.post('https://netflix-s87l.onrender.com//api/movies', {category: category});
+        setApiData(response.data.results);
+      } catch (err) {
+        console.error('Error fetching movies:', err);
+      }
+    };
+
+    fetchMovies();
+
+    if (cardsRef.current) {
+      cardsRef.current.addEventListener('wheel', handleWheel);
+    }
+
+    // Cleanup the event listener when the component is unmounted or category changes
+    return () => {
+      if (cardsRef.current) {
+        cardsRef.current.removeEventListener('wheel', handleWheel);
+      }
+    };
   }, [category]);
 
   return (

@@ -39,6 +39,19 @@ app.get('/movies/:category', async (req, res) => {
     }
 });
 
+app.get('/api/movies', async (req, res) => {
+    const category = req.body || 'now_playing';
+    try {
+        const response = await axios.get(`https://api.themoviedb.org/3/movie/${category}`, {
+            params: { language: 'en-US', page: 1 },
+            headers: { Authorization: `Bearer ${TMDB_API_KEY}` }
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch movies' });
+    }
+});
+
 // Fetch movie trailers (alternative API needed)
 // app.get('/movies/:id/videos', async (req, res) => {
 //     const movieId = req.params.id;
