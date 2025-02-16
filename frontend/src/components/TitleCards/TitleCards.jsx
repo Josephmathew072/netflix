@@ -27,7 +27,9 @@ const TitleCards = ({ title = "Popular", category }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.post('https://netflix-s87l.onrender.com//api/movies', {category: category});
+        const response = await axios.get('http://localhost:5000/api/movies', {
+          params: { category }
+        });
         setApiData(response.data.results);
       } catch (err) {
         console.error('Error fetching movies:', err);
@@ -49,14 +51,14 @@ const TitleCards = ({ title = "Popular", category }) => {
   }, [category]);
 
   return (
-     <div className='title_cards'>
+    <div className='title_cards'>
       <h2>{title}</h2>
       <div className="card_list" ref={cardsRef}>
-        {apiData.map((card, index)=>{
+        {apiData.map((card, index) => {
           return <Link to={`/player/${card.id}`} className='card' key={index}>
-              <img src={'https://image.tmdb.org/t/p/w500' + card.backdrop_path} alt=''/>
-              <p>{card.original_title}</p>
-            </Link>
+            <img src={'https://image.tmdb.org/t/p/w500' + card.backdrop_path} alt='' />
+            <p>{card.original_title}</p>
+          </Link>
         })}
       </div>
     </div>

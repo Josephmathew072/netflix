@@ -40,7 +40,7 @@ app.get('/movies/:category', async (req, res) => {
 });
 
 app.get('/api/movies', async (req, res) => {
-    const category = req.body || 'now_playing';
+    const category = req.query.category || 'now_playing';
     try {
         const response = await axios.get(`https://api.themoviedb.org/3/movie/${category}`, {
             params: { language: 'en-US', page: 1 },
