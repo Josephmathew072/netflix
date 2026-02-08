@@ -27,7 +27,7 @@ const TitleCards = ({ title = "Popular", category }) => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/movies', {
+        const response = await axios.get('https://netflix-s87l.onrender.com/api/movies', {
           params: { category }
         });
         setApiData(response.data.results);
